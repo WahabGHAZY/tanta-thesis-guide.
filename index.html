@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Thesis Guidelines: Meta-Analysis | Tanta University Faculty of Medicine</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts for Academic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Merriweather', 'serif'],
+                        sans: ['Open Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        tanta: {
+                            navy: '#0f172a',    // Deep formal blue/black
+                            blue: '#1e3a8a',    // Academic blue
+                            gold: '#b45309',    // Formal gold/bronze
+                            light: '#f8fafc',   // Paper white
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f1f5f9; }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            height: 300px;
+        }
+
+        /* Clean, formal scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .tab-active {
+            background-color: #ffffff;
+            border-left: 4px solid #1e3a8a;
+            color: #1e3a8a;
+            font-weight: 600;
+            box-shadow: -1px 0px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab-inactive {
+            border-left: 4px solid transparent;
+            color: #475569;
+        }
+
+        /* Print formatting for official output */
+        @media print {
+            nav, header button, .no-print { display: none !important; }
+            main { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+            body { background-color: white; }
+            section { display: block !important; page-break-after: always; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Official Institutional Header -->
+    <header class="bg-tanta-navy text-white z-10 border-b-4 border-tanta-gold">
+        <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center md:items-start justify-between">
+            <div class="flex items-center space-x-6 text-center md:text-left">
+                <!-- Academic Crest Placeholder -->
+                <div class="w-16 h-16 rounded-full border-2 border-tanta-gold flex items-center justify-center bg-white text-tanta-navy flex-shrink-0">
+                    <span class="font-serif font-bold text-2xl">TU</span>
+                </div>
+                <div>
+                    <h2 class="text-tanta-gold text-sm font-bold tracking-widest uppercase mb-1">Postgraduate Studies & Research Affairs</h2>
+                    <h1 class="font-serif text-2xl md:text-3xl font-bold leading-tight">Faculty of Medicine, Tanta University</h1>
+                    <p class="text-slate-300 text-sm mt-2 font-serif italic">Official Guidelines for Systematic Review and Meta-Analysis</p>
+                </div>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden mt-4 text-sm border border-slate-500 px-4 py-2 uppercase tracking-wide">Menu</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex-grow flex flex-col md:flex-row max-w-6xl mx-auto w-full my-6 bg-white shadow-md border border-slate-200">
+        
+        <!-- Formal Sidebar Navigation -->
+        <nav id="sidebar" class="hidden md:block w-full md:w-64 bg-slate-50 border-r border-slate-200 flex-shrink-0 relative">
+            <div class="p-0">
+                <div class="p-4 bg-slate-100 border-b border-slate-200">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Document Index</p>
+                </div>
+                <ul class="flex flex-col">
+                    <li>
+                        <button onclick="switchTab('overview')" id="btn-overview" class="w-full text-left px-6 py-4 transition-colors tab-active hover:bg-white text-sm">
+                            I. Scope & Word Limits
+                        </button>
+                    </li>
+                    <li class="border-t border-slate-100">
+                        <button onclick="switchTab('structure')" id="btn-structure" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                            II. Thesis Architecture
+                        </button>
+                    </li>
+                    <li class="border-t border-slate-100">
+                        <button onclick="switchTab('methodology')" id="btn-methodology" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                            III. PRISMA Compliance
+                        </button>
+                    </li>
+                    <li class="border-t border-slate-100">
+                        <button onclick="switchTab('formatting')" id="btn-formatting" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                            IV. Formatting Regulations
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="m-6 p-4 border border-tanta-gold bg-amber-50">
+                    <p class="text-xs text-tanta-gold font-bold uppercase tracking-wide mb-1">Administrative Directive</p>
+                    <p class="text-xs text-slate-800 font-serif leading-relaxed">Prior to initiation, all review protocols must be registered prospectively (e.g., PROSPERO) and approved by the institutional ethical committee.</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="flex-grow p-6 md:p-10 w-full max-w-4xl">
+            
+            <!-- SECTION 1: OVERVIEW & LIMITS -->
+            <section id="sec-overview" class="block animate-fade-in">
+                <div class="border-b border-slate-300 pb-4 mb-8">
+                    <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section I</p>
+                    <h2 class="font-serif text-3xl font-bold text-tanta-navy">Scope & Length Expectations</h2>
+                </div>
+
+                <div class="prose max-w-none text-slate-700 space-y-6">
+                    <p>
+                        The Faculty of Medicine at Tanta University evaluates postgraduate theses on the basis of methodological rigor, scientific contribution, and clarity of synthesis rather than strict word count parameters. However, normative length frameworks exist for administrative and review purposes.
+                    </p>
+
+                    <div class="bg-slate-50 border-l-4 border-tanta-blue p-5 my-6">
+                        <h3 class="font-serif font-bold text-lg text-tanta-navy mb-2">The Meta-Analysis Exception</h3>
+                        <p class="text-sm leading-relaxed">
+                            Unlike primary clinical trials requiring extensive patient data logging, systematic reviews and meta-analyses are inherently concise documents. Evaluators prioritize strict adherence to <strong>PRISMA guidelines</strong> and robust statistical synthesis. A highly focused document of 70-90 pages is deemed superior to artificially inflated texts.
+                        </p>
+                    </div>
+
+                    <h3 class="font-serif font-bold text-xl text-tanta-navy mt-8 border-b border-slate-200 pb-2">Institutional Page Norms</h3>
+                    <table class="w-full text-left text-sm border-collapse mt-4">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider">
+                                <th class="p-3 border border-slate-300 font-semibold">Degree Program</th>
+                                <th class="p-3 border border-slate-300 font-semibold">Standard Thesis</th>
+                                <th class="p-3 border border-slate-300 font-semibold">Meta-Analysis (Expected)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-3 border border-slate-300 font-semibold text-tanta-navy">Master's (MSc)</td>
+                                <td class="p-3 border border-slate-300">80 - 150 pages</td>
+                                <td class="p-3 border border-slate-300 bg-blue-50">60 - 90 pages</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border border-slate-300 font-semibold text-tanta-navy">Doctorate (MD)</td>
+                                <td class="p-3 border border-slate-300">150 - 250+ pages</td>
+                                <td class="p-3 border border-slate-300 bg-blue-50">80 - 120 pages</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs text-slate-500 mt-2">*Page counts exclude preliminary pages, reference lists, and extensive supplementary appendices.</p>
+
+                    <h3 class="font-serif font-bold text-xl text-tanta-navy mt-8 border-b border-slate-200 pb-2">Target Word Distribution (Excluding References)</h3>
+                    <ul class="list-none space-y-3 mt-4 text-sm">
+                        <li class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="font-semibold">I. Introduction & Background</span>
+                            <span>2,000 - 3,500 words</span>
+                        </li>
+                        <li class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="font-semibold">II. Methodology</span>
+                            <span>3,000 - 5,000 words</span>
+                        </li>
+                        <li class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="font-semibold">III. Results</span>
+                            <span>2,500 - 4,000 words</span>
+                        </li>
+                        <li class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="font-semibold">IV. Discussion & Conclusions</span>
+                            <span>3,000 - 4,500 words</span>
+                        </li>
+                        <li class="flex justify-between font-bold text-tanta-navy pt-2 bg-slate-50 p-2 border border-slate-200">
+                            <span>Total Main Body Estimation</span>
+                            <span>~10,500 - 17,000 words</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 2: STRUCTURE -->
+            <section id="sec-structure" class="hidden animate-fade-in">
+                <div class="border-b border-slate-300 pb-4 mb-8">
+                    <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section II</p>
+                    <h2 class="font-serif text-3xl font-bold text-tanta-navy">Thesis Architecture</h2>
+                </div>
+
+                <p class="text-slate-700 mb-8">
+                    The structural integrity of a meta-analysis differs fundamentally from traditional empirical research. Proportional emphasis must be placed on methodology and results processing.
+                </p>
+
+                <div class="border border-slate-200 p-6 bg-slate-50 mb-8">
+                    <h3 class="font-serif text-center font-bold text-tanta-navy mb-4">Proportional Content Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="structureChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="border-l-2 border-slate-300 pl-4">
+                        <h4 class="font-serif font-bold text-tanta-navy text-lg">1. Introduction / Review of Literature</h4>
+                        <p class="text-sm text-slate-600 mt-1">Requires brevity. The literature review must culminate in a clear justification for the meta-analysis, explicitly highlighting conflicting primary trials, knowledge gaps, or the necessity for consensus.</p>
+                    </div>
+                    
+                    <div class="border-l-2 border-tanta-blue pl-4 bg-blue-50 py-2 pr-2">
+                        <h4 class="font-serif font-bold text-tanta-navy text-lg">2. Methodology (Core Component)</h4>
+                        <p class="text-sm text-slate-800 mt-1">
+                            Must rigorously define the <span class="font-semibold">PICO</span> criteria, exact search syntax for all utilized databases (e.g., PubMed, Cochrane, Scopus), explicit inclusion/exclusion criteria, dual-reviewer selection processes, Risk of Bias (RoB) tools utilized, and specific statistical models (fixed vs. random effects, heterogeneity assessment metrics like $I^2$).
+                        </p>
+                    </div>
+
+                    <div class="border-l-2 border-slate-300 pl-4">
+                        <h4 class="font-serif font-bold text-tanta-navy text-lg">3. Results</h4>
+                        <p class="text-sm text-slate-600 mt-1">Must feature the PRISMA Flow Diagram detailing study attrition. Requires comprehensive tables defining the baseline characteristics of included studies, followed by forest plots for primary and secondary outcomes, and funnel plots assessing publication bias.</p>
+                    </div>
+
+                    <div class="border-l-2 border-slate-300 pl-4">
+                        <h4 class="font-serif font-bold text-tanta-navy text-lg">4. Discussion</h4>
+                        <p class="text-sm text-slate-600 mt-1">Contextualization of the synthesized effect sizes against current clinical guidelines. A mandatory section detailing the limitations of the included primary studies and the meta-analysis itself is required.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: METHODOLOGY / PRISMA -->
+            <section id="sec-methodology" class="hidden animate-fade-in">
+                <div class="border-b border-slate-300 pb-4 mb-8">
+                    <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section III</p>
+                    <h2 class="font-serif text-3xl font-bold text-tanta-navy">PRISMA Compliance Audit</h2>
+                </div>
+
+                <p class="text-slate-700 mb-6">
+                    Submission of a meta-analysis thesis mandates strict adherence to the updated <strong>Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)</strong> statement. Supervisors and reviewers will audit the manuscript against the following critical milestones.
+                </p>
+
+                <div class="border border-slate-300 bg-white">
+                    <div class="bg-slate-100 p-4 border-b border-slate-300 flex justify-between items-center">
+                        <h3 class="font-serif font-bold text-tanta-navy">Official Audit Tracker</h3>
+                        <div class="text-right">
+                            <span class="text-xs uppercase tracking-wide text-slate-500 block">Completion Status</span>
+                            <span id="progress-text" class="text-xl font-bold text-tanta-blue font-serif">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full bg-slate-200 h-1">
+                        <div id="progress-bar" class="bg-tanta-blue h-1 transition-all duration-500" style="width: 0%"></div>
+                    </div>
+
+                    <div class="divide-y divide-slate-100" id="checklist-container">
+                        <!-- Generated via JS -->
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-sm text-slate-500 italic">
+                    * The complete PRISMA 2020 checklist document must be attached as an appendix to the final bound thesis.
+                </div>
+            </section>
+
+            <!-- SECTION 4: FORMATTING -->
+            <section id="sec-formatting" class="hidden animate-fade-in">
+                <div class="border-b border-slate-300 pb-4 mb-8">
+                    <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section IV</p>
+                    <h2 class="font-serif text-3xl font-bold text-tanta-navy">Mandatory Formatting Regulations</h2>
+                </div>
+
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-tanta-navy border-b border-slate-200 pb-2 mb-4">A. Typographical Standards</h3>
+                        <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                            <li><span class="font-semibold text-tanta-navy">Primary Typeface (English):</span> Times New Roman, 14 pt.</li>
+                            <li><span class="font-semibold text-tanta-navy">Primary Typeface (Arabic Summary):</span> Simplified Arabic, 14 pt.</li>
+                            <li><span class="font-semibold text-tanta-navy">Headings:</span> 16 pt Bold (Chapter Titles), 14 pt Bold (Subheadings).</li>
+                            <li><span class="font-semibold text-tanta-navy">Line Spacing:</span> Exactly 1.5 lines throughout the main body.</li>
+                            <li><span class="font-semibold text-tanta-navy">Margin Constraints:</span> 3.5 cm on the binding edge (Left for English text), 2.5 cm on all other margins (Top, Bottom, Right).</li>
+                            <li><span class="font-semibold text-tanta-navy">Pagination:</span> Centered at the bottom. Roman numerals (I, II, III) for preliminary pages; Arabic numerals (1, 2, 3) commencing from the Introduction.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-tanta-navy border-b border-slate-200 pb-2 mb-4">B. Citation Protocol</h3>
+                        <p class="text-slate-700 text-sm mb-3">The Faculty of Medicine strictly enforces the <strong>Vancouver Citation Style</strong>. Citations must appear as bracketed or superscript Arabic numerals in the text, ordered consecutively as they appear.</p>
+                        <div class="bg-slate-50 border border-slate-200 p-4 font-mono text-xs text-slate-700">
+                            <span class="text-slate-400 block mb-1">// Standard Journal Article Format</span>
+                            [1] Author AB, Author CD, Author EF. Title of the peer-reviewed article. Abbreviated Journal Name. Year of Publication;Volume(Issue):StartPage-EndPage.
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-tanta-navy border-b border-slate-200 pb-2 mb-4">C. Manuscript Assembly Order</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700">
+                            <ol class="list-decimal list-inside space-y-1">
+                                <li>Official English Title Page</li>
+                                <li>Supervisors & Committee Page</li>
+                                <li>Formal Acknowledgments</li>
+                                <li>Table of Contents</li>
+                                <li>List of Abbreviations</li>
+                                <li>List of Tables & Figures</li>
+                            </ol>
+                            <ol class="list-decimal list-inside space-y-1" start="7">
+                                <li><span class="font-bold text-tanta-navy">Main Body (Introduction to Conclusion)</span></li>
+                                <li>References / Bibliography</li>
+                                <li>Appendices (Search Strategies, PRISMA Checklist)</li>
+                                <li>Arabic Summary Document</li>
+                                <li>Official Arabic Title Page</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Official Footer -->
+    <footer class="bg-slate-100 border-t border-slate-200 mt-auto no-print">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+            <p>&copy; 2026 Tanta University Faculty of Medicine. All rights reserved.</p>
+            <p class="mt-2 md:mt-0">Document Ref: TU-MED-PGR-META-01 | Version 1.0</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. Navigation Logic ---
+        const sections = ['overview', 'structure', 'methodology', 'formatting'];
+        
+        function switchTab(tabId) {
+            // Hide all sections
+            sections.forEach(sec => {
+                document.getElementById(`sec-${sec}`).classList.add('hidden');
+                document.getElementById(`sec-${sec}`).classList.remove('block');
+                
+                // Reset button styles
+                const btn = document.getElementById(`btn-${sec}`);
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+
+            // Show active section
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            document.getElementById(`sec-${tabId}`).classList.add('block');
+            
+            // Style active button
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('tab-inactive');
+            activeBtn.classList.add('tab-active');
+
+            // Initialize charts if navigating to structure tab (only once)
+            if (tabId === 'structure' && !window.chartInitialized) {
+                initChart();
+                window.chartInitialized = true;
+            }
+
+            // Close mobile menu if open
+            const sidebar = document.getElementById('sidebar');
+            if(window.innerWidth < 768) {
+                sidebar.classList.add('hidden');
+            }
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        });
+
+        // --- 2. Chart.js Initialization ---
+        function initChart() {
+            const ctx = document.getElementById('structureChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'pie', // Changed to pie for a more traditional academic look
+                data: {
+                    labels: [
+                        'Introduction & Lit Review', 
+                        'Methodology', 
+                        'Results Synthesis', 
+                        'Discussion', 
+                        'Conclusions & Refs'
+                    ],
+                    datasets: [{
+                        data: [15, 30, 30, 15, 10],
+                        backgroundColor: [
+                            '#cbd5e1', // Light slate
+                            '#1e3a8a', // Tanta Navy
+                            '#3b82f6', // Bright Blue
+                            '#94a3b8', // Med Slate
+                            '#f1f5f9'  // Very light
+                        ],
+                        borderWidth: 1,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: {
+                                    family: "'Open Sans', sans-serif",
+                                    size: 11
+                                },
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ': ' + context.parsed + '% allocation';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- 3. Interactive Checklist Logic ---
+        const checklistItems = [
+            "Formulation of a definitive PICO research question",
+            "Prospective registration of protocol (PROSPERO)",
+            "Documentation of exhaustive search strategies across multiple databases",
+            "Independent dual-reviewer screening process (Title/Abstract & Full Text)",
+            "Standardized data extraction protocols",
+            "Formal Risk of Bias (RoB) Assessment implementation",
+            "Execution of quantitative synthesis (Meta-Analysis models)",
+            "Statistical evaluation of study heterogeneity (I² statistic)",
+            "Assessment of publication bias (e.g., Funnel plots, Egger's test)",
+            "Completion of the PRISMA Flow Diagram"
+        ];
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            
+            checklistItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start p-4 hover:bg-slate-50 transition-colors cursor-pointer';
+                div.onclick = () => toggleCheckbox(index);
+
+                div.innerHTML = `
+                    <div class="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-4 border border-slate-400 bg-white flex-shrink-0">
+                        <input type="checkbox" id="check-${index}" class="opacity-0 absolute w-full h-full cursor-pointer" onclick="event.stopPropagation(); toggleCheckbox(${index})">
+                        <svg id="mark-${index}" class="hidden w-3 h-3 text-tanta-blue fill-current" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
+                    </div>
+                    <label class="text-sm text-slate-700 cursor-pointer select-none leading-snug" id="label-${index}">${item}</label>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleCheckbox(index) {
+            const checkbox = document.getElementById(`check-${index}`);
+            const mark = document.getElementById(`mark-${index}`);
+            const label = document.getElementById(`label-${index}`);
+            
+            if(event.target.tagName !== 'INPUT') {
+                checkbox.checked = !checkbox.checked;
+            }
+
+            if (checkbox.checked) {
+                mark.classList.remove('hidden');
+                label.classList.add('text-slate-400');
+                label.classList.remove('text-slate-700');
+            } else {
+                mark.classList.add('hidden');
+                label.classList.remove('text-slate-400');
+                label.classList.add('text-slate-700');
+            }
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let checkedCount = 0;
+            checkboxes.forEach(cb => {
+                if(cb.checked) checkedCount++;
+            });
+
+            const percentage = Math.round((checkedCount / checklistItems.length) * 100);
+            
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-text').innerText = `${percentage}%`;
+
+            if(percentage === 100) {
+                document.getElementById('progress-text').classList.add('text-tanta-gold');
+                document.getElementById('progress-text').classList.remove('text-tanta-blue');
+                document.getElementById('progress-bar').classList.add('bg-tanta-gold');
+                document.getElementById('progress-bar').classList.remove('bg-tanta-blue');
+            } else {
+                document.getElementById('progress-text').classList.remove('text-tanta-gold');
+                document.getElementById('progress-text').classList.add('text-tanta-blue');
+                document.getElementById('progress-bar').classList.remove('bg-tanta-gold');
+                document.getElementById('progress-bar').classList.add('bg-tanta-blue');
+            }
+        }
+
+        // Initialize application
+        window.onload = () => {
+            renderChecklist();
+            tailwind.config.theme.extend.animation = {
+                'fade-in': 'fadeIn 0.3s ease-out'
+            };
+            tailwind.config.theme.extend.keyframes = {
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' },
+                }
+            };
+        };
+    </script>
+</body>
+</html>
