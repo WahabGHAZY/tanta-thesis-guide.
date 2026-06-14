@@ -1,14 +1,117 @@
-```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta-Analysis Thesis Handbook · Tanta University Faculty of Medicine</title>
+    <meta name="description" content="Interactive guidance for writing a systematic review / meta-analysis thesis at Tanta University Faculty of Medicine: scope, structure, PRISMA compliance, formatting, TUREC roadmap, digital workflow, and a curated tutorial library. Mentoring by Abdelwahab Ghazy, MD.">
+    <meta name="author" content="Abdelwahab Ghazy, MD">
+
+    <!-- Open Graph (controls how the page looks when shared on WhatsApp / social) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Meta-Analysis Thesis Handbook · Mentoring by Abdelwahab Ghazy, MD">
+    <meta property="og:description" content="A complete, interactive guide to writing a systematic review / meta-analysis thesis — plus 1-on-1 mentoring from protocol to publication.">
+
+    <!-- Favicon (inline SVG, no extra file needed) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Open+Sans:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind (Play CDN) with typography plugin -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tanta-navy': '#0f172a',
+                        'tanta-blue': '#1e40af',
+                        'tanta-gold': '#9a7113',
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        sans: ['"Open Sans"', 'system-ui', 'sans-serif'],
+                        arabic: ['"Noto Naskh Arabic"', 'serif'],
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; }
+
+        /* Sidebar tab states (were referenced but never defined) */
+        .tab-active   { background:#ffffff; border-left:4px solid #1e40af; color:#0f172a; font-weight:700; }
+        .tab-inactive { color:#475569; border-left:4px solid transparent; }
+
+        /* Chart wrapper (was referenced but never defined) */
+        .chart-container { position:relative; height:300px; width:100%; }
+
+        /* Inline tutorial / resource links */
+        .tut-link {
+            color:#1e40af; font-weight:600; text-decoration:underline;
+            text-decoration-color:#93c5fd; text-underline-offset:2px;
+            transition:color .15s, text-decoration-color .15s;
+        }
+        .tut-link:hover { color:#0f172a; text-decoration-color:#1e40af; }
+
+        /* Resource cards */
+        .resource-card { transition:transform .15s, box-shadow .15s, border-color .15s; }
+        .resource-card:hover { transform:translateY(-3px); box-shadow:0 10px 24px -12px rgba(15,23,42,.35); border-color:#1e40af; }
+
+        @media print {
+            .no-print { display:none !important; }
+            #sidebar { display:block !important; }
+            section[id^="sec-"] { display:block !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+<!-- ===================== HEADER (mobile menu lives here) ===================== -->
+<header class="bg-tanta-navy text-white no-print sticky top-0 z-30 shadow-lg">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-tanta-gold/15 border border-tanta-gold flex items-center justify-center font-serif font-bold text-tanta-gold text-lg flex-shrink-0">TU</div>
+            <div>
+                <h1 class="font-serif text-base md:text-xl font-bold leading-tight">Meta-Analysis Thesis Handbook</h1>
+                <p class="text-[10px] md:text-[11px] text-slate-300 uppercase tracking-widest">Tanta University · Faculty of Medicine</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="switchTab('author')" class="hidden md:inline-flex items-center gap-2 bg-tanta-gold/90 hover:bg-tanta-gold text-white text-sm font-semibold px-4 py-2 rounded transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Contact the Author
+            </button>
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded border border-slate-600 hover:bg-white/10 transition-colors" aria-label="Toggle navigation menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
 <div class="flex-grow flex flex-col md:flex-row max-w-6xl mx-auto w-full my-6 bg-white shadow-md border border-slate-200">
     <nav id="sidebar" class="hidden md:block w-full md:w-64 bg-slate-50 border-r border-slate-200 flex-shrink-0 relative">
-        <div class="p-0 sticky top-0">
+        <div class="p-0 sticky top-20">
             <div class="p-4 bg-slate-100 border-b border-slate-200">
                 <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Document Index</p>
             </div>
             <ul class="flex flex-col">
                 <li>
                     <button onclick="switchTab('overview')" id="btn-overview" class="w-full text-left px-6 py-4 transition-colors tab-active hover:bg-white text-sm">
-                        I. Scope & Word Limits
+                        I. Scope &amp; Word Limits
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
@@ -28,7 +131,7 @@
                 </li>
                 <li class="border-t border-slate-100">
                     <button onclick="switchTab('admin')" id="btn-admin" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
-                        V. TUREC & Admin Roadmap
+                        V. TUREC &amp; Admin Roadmap
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
@@ -36,11 +139,26 @@
                         VI. Digital Workflow Toolkit
                     </button>
                 </li>
+                <li class="border-t border-slate-100">
+                    <button onclick="switchTab('resources')" id="btn-resources" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                        VII. Tutorial &amp; Resource Library
+                    </button>
+                </li>
+                <li class="border-t border-slate-100">
+                    <button onclick="switchTab('author')" id="btn-author" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                        VIII. About the Author
+                    </button>
+                </li>
             </ul>
             <div class="m-6 p-4 border border-tanta-gold bg-amber-50 hidden md:block">
                 <p class="text-xs text-tanta-gold font-bold uppercase tracking-wide mb-1">Critical Notice</p>
                 <p class="text-xs text-slate-800 font-serif leading-relaxed">Ensure your protocol is registered with the institutional ethical committee before initiating data extraction.</p>
             </div>
+            <button onclick="switchTab('author')" class="m-6 mt-0 w-[calc(100%-3rem)] text-left p-4 border border-tanta-blue bg-tanta-navy hover:bg-tanta-blue transition-colors rounded hidden md:block group">
+                <p class="text-xs text-tanta-gold font-bold uppercase tracking-wide mb-1">Need 1-on-1 help?</p>
+                <p class="text-sm text-white font-serif leading-relaxed">Get personal mentoring on your meta-analysis &mdash; from PICO to publication.</p>
+                <span class="text-xs text-blue-200 font-semibold mt-2 inline-block group-hover:translate-x-1 transition-transform">Contact Dr. Ghazy &rarr;</span>
+            </button>
         </div>
     </nav>
 
@@ -48,7 +166,7 @@
         <section id="sec-overview" class="block">
             <div class="border-b border-slate-300 pb-4 mb-8">
                 <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section I</p>
-                <h2 class="font-serif text-3xl font-bold text-tanta-navy">Scope & Length Expectations</h2>
+                <h2 class="font-serif text-3xl font-bold text-tanta-navy">Scope &amp; Length Expectations</h2>
             </div>
             <div class="prose max-w-none text-slate-700 space-y-6">
                 <p class="text-lg leading-relaxed mb-6 font-serif text-slate-600">
@@ -60,7 +178,7 @@
                 <div class="bg-slate-50 border-l-4 border-tanta-blue p-5 my-6">
                     <h3 class="font-serif font-bold text-lg text-tanta-navy mb-2">The Meta-Analysis Exception</h3>
                     <p class="text-sm leading-relaxed">
-                        Unlike primary clinical trials requiring extensive patient data logging, systematic reviews and meta-analyses are inherently concise documents. Evaluators prioritize strict adherence to PRISMA guidelines and robust statistical synthesis. A highly focused document of 70-90 pages is deemed superior to artificially inflated texts.
+                        Unlike primary clinical trials requiring extensive patient data logging, systematic reviews and meta-analyses are inherently concise documents. Evaluators prioritize strict adherence to <a class="tut-link" href="https://www.bmj.com/content/372/bmj.n71" target="_blank" rel="noopener">PRISMA 2020 guidelines</a> and robust statistical synthesis. A highly focused document of 70-90 pages is deemed superior to artificially inflated texts.
                     </p>
                 </div>
                 <h3 class="font-serif font-bold text-xl text-tanta-navy mt-8 border-b border-slate-200 pb-2">Institutional Page Norms</h3>
@@ -91,7 +209,7 @@
                 <h3 class="font-serif font-bold text-xl text-tanta-navy mt-8 border-b border-slate-200 pb-2">Target Word Distribution (Excluding References)</h3>
                 <ul class="list-none space-y-3 mt-4 text-sm bg-white p-6 border border-slate-200 rounded-lg shadow-sm">
                     <li class="flex justify-between border-b border-slate-100 pb-3">
-                        <span class="font-semibold text-slate-800">I. Introduction & Background</span>
+                        <span class="font-semibold text-slate-800">I. Introduction &amp; Background</span>
                         <span class="text-slate-600">2,000 - 3,500 words</span>
                     </li>
                     <li class="flex justify-between border-b border-slate-100 pb-3">
@@ -103,7 +221,7 @@
                         <span class="text-slate-600">2,500 - 4,000 words</span>
                     </li>
                     <li class="flex justify-between border-b border-slate-100 pb-3">
-                        <span class="font-semibold text-slate-800">IV. Discussion & Conclusions</span>
+                        <span class="font-semibold text-slate-800">IV. Discussion &amp; Conclusions</span>
                         <span class="text-slate-600">3,000 - 4,500 words</span>
                     </li>
                     <li class="flex justify-between font-bold text-tanta-navy pt-3 text-base">
@@ -111,6 +229,15 @@
                         <span>~10,500 - 17,000 words</span>
                     </li>
                 </ul>
+
+                <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-5 not-prose">
+                    <p class="text-xs font-bold uppercase tracking-widest text-tanta-blue mb-2">New here? Start with these</p>
+                    <ul class="text-sm text-slate-700 space-y-1.5">
+                        <li>&#8226; <a class="tut-link" href="https://training.cochrane.org/handbook/current" target="_blank" rel="noopener">Cochrane Handbook for Systematic Reviews</a> &mdash; the global reference text (free online).</li>
+                        <li>&#8226; <a class="tut-link" href="https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/" target="_blank" rel="noopener">Doing Meta-Analysis in R</a> &mdash; a free, beginner-friendly hands-on book.</li>
+                        <li>&#8226; Jump to the <a class="tut-link" href="#" onclick="switchTab('resources');return false;">Tutorial &amp; Resource Library (Section VII)</a> for everything in one place.</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -167,6 +294,16 @@
             <p class="text-lg leading-relaxed mb-6 font-serif text-slate-600">
                 This section provides an interactive tracking tool for the PRISMA statement protocol. By interacting with this checklist, you can systematically audit your methodology chapter to ensure it meets international reporting standards required by the university review boards.
             </p>
+
+            <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-5">
+                <p class="text-xs font-bold uppercase tracking-widest text-tanta-blue mb-2">Official PRISMA Tutorials</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                    <a class="tut-link" href="https://www.prisma-statement.org/" target="_blank" rel="noopener">PRISMA 2020 statement &amp; checklists &#8599;</a>
+                    <a class="tut-link" href="https://www.eshackathon.org/software/PRISMA2020.html" target="_blank" rel="noopener">PRISMA 2020 flow-diagram generator &#8599;</a>
+                    <a class="tut-link" href="https://training.cochrane.org/handbook/current/chapter-iii" target="_blank" rel="noopener">Cochrane reporting guidance &#8599;</a>
+                </div>
+            </div>
+
             <div class="bg-white border border-slate-300 shadow-sm rounded-lg overflow-hidden">
                 <div class="bg-slate-100 p-6 border-b border-slate-300 flex justify-between items-center">
                     <h3 class="font-serif font-bold text-tanta-navy text-xl">Official Audit Tracker</h3>
@@ -180,7 +317,11 @@
                 </div>
                 <div class="divide-y divide-slate-100 p-2" id="checklist-container">
                 </div>
+                <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+                    <button onclick="resetChecklist()" class="text-xs font-semibold text-slate-500 hover:text-tanta-blue uppercase tracking-widest transition-colors">Reset checklist</button>
+                </div>
             </div>
+            <p class="text-xs text-slate-400 mt-2">Your progress is saved automatically in this browser.</p>
             <div class="mt-6 p-4 bg-blue-50 border border-blue-200 text-sm text-blue-900 flex items-start">
                 <span class="text-xl mr-3 leading-none">&#8505;</span>
                 <p>The complete, fully populated PRISMA 2020 checklist document must be physically attached as an appendix to the final bound thesis submission.</p>
@@ -214,7 +355,7 @@
                     <h3 class="font-serif text-xl font-bold text-tanta-navy border-b border-slate-100 pb-3 mb-4 flex items-center">
                         <span class="mr-3 text-tanta-gold">&#9632;</span> B. Citation Protocol
                     </h3>
-                    <p class="text-slate-700 text-sm mb-4 leading-relaxed">The Faculty of Medicine strictly enforces the <strong>Vancouver Citation Style</strong>. Citations must appear as bracketed or superscript Arabic numerals in the text, ordered consecutively as they appear.</p>
+                    <p class="text-slate-700 text-sm mb-4 leading-relaxed">The Faculty of Medicine strictly enforces the <strong>Vancouver Citation Style</strong>. Citations must appear as bracketed or superscript Arabic numerals in the text, ordered consecutively as they appear. See the official <a class="tut-link" href="https://www.nlm.nih.gov/bsd/uniform_requirements.html" target="_blank" rel="noopener">NLM / ICMJE Vancouver reference guide</a> and <a class="tut-link" href="https://www.ncbi.nlm.nih.gov/books/NBK7256/" target="_blank" rel="noopener">Citing Medicine (NCBI)</a>.</p>
                     <div class="bg-slate-800 text-slate-300 p-5 rounded font-mono text-xs shadow-inner">
                         <span class="text-slate-500 block mb-2 font-sans uppercase tracking-widest text-[10px]">Standard Journal Article Format Example</span>
                         [1] Author AB, Author CD. Title of the peer-reviewed article. Abbreviated Journal Name. Year of Publication;Volume(Issue):StartPage-EndPage.
@@ -228,17 +369,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-slate-700 ml-2">
                         <ol class="list-decimal list-inside space-y-2">
                             <li>Official English Title Page</li>
-                            <li>Supervisors & Committee Page</li>
+                            <li>Supervisors &amp; Committee Page</li>
                             <li>Formal Acknowledgments</li>
                             <li>Table of Contents</li>
                             <li>List of Abbreviations</li>
-                            <li>List of Tables & Figures</li>
+                            <li>List of Tables &amp; Figures</li>
                         </ol>
                         <ol class="list-decimal list-inside space-y-2" start="7">
                             <li class="font-bold text-tanta-blue bg-blue-50 py-1 px-2 -ml-2 rounded">Main Body (Introduction to Conclusion)</li>
                             <li>References / Bibliography</li>
                             <li>Appendices (Search Strategies, PRISMA Checklist)</li>
-                            <li>Arabic Summary Document (الملخص العربي)</li>
+                            <li>Arabic Summary Document <span class="font-arabic">(الملخص العربي)</span></li>
                             <li>Official Arabic Title Page</li>
                         </ol>
                     </div>
@@ -249,7 +390,7 @@
         <section id="sec-admin" class="hidden">
             <div class="border-b border-slate-300 pb-4 mb-8">
                 <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section V</p>
-                <h2 class="font-serif text-3xl font-bold text-tanta-navy">TUREC Clearance & Admin Roadmap</h2>
+                <h2 class="font-serif text-3xl font-bold text-tanta-navy">TUREC Clearance &amp; Admin Roadmap</h2>
             </div>
             <p class="text-lg leading-relaxed mb-8 font-serif text-slate-600">
                 This section outlines the bureaucratic progression specific to Tanta University. It provides a linear timeline of administrative steps, detailing how to secure the necessary ethical approvals and departmental sign-offs prior to conducting your data extraction.
@@ -258,7 +399,7 @@
                 <div class="relative pl-8 md:pl-12">
                     <div class="absolute -left-3 md:-left-[13px] top-1 w-6 h-6 rounded-full bg-white border-4 border-tanta-gold"></div>
                     <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Step 1</p>
-                    <h3 class="font-serif text-xl font-bold text-tanta-navy mb-2">Departmental Protocol Seminar <span class="text-slate-500 font-sans font-normal text-base">(حلقة البحث)</span></h3>
+                    <h3 class="font-serif text-xl font-bold text-tanta-navy mb-2">Departmental Protocol Seminar <span class="text-slate-500 font-arabic font-normal text-base">(حلقة البحث)</span></h3>
                     <p class="text-sm text-slate-700 leading-relaxed bg-white p-4 border border-slate-200 rounded shadow-sm">
                         Before formally submitting any paperwork, you must present your research concept to your specific department council (e.g., Orthopedic Surgery). You must prepare a concise presentation defining the clinical gap, your precise PICO question, and the planned search strategy databases. Approval here is required to proceed to ethical review.
                     </p>
@@ -284,9 +425,9 @@
                 <div class="relative pl-8 md:pl-12">
                     <div class="absolute -left-3 md:-left-[13px] top-1 w-6 h-6 rounded-full bg-white border-4 border-tanta-navy"></div>
                     <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Step 3</p>
-                    <h3 class="font-serif text-xl font-bold text-tanta-navy mb-2">PROSPERO & Postgraduate Registration</h3>
+                    <h3 class="font-serif text-xl font-bold text-tanta-navy mb-2">PROSPERO &amp; Postgraduate Registration</h3>
                     <p class="text-sm text-slate-700 leading-relaxed bg-white p-4 border border-slate-200 rounded shadow-sm">
-                        Upon receiving TUREC clearance, register the protocol title internationally via the PROSPERO database to prevent duplication of effort. Concurrently, submit the final, signed dossier to the Vice Dean for Postgraduate Affairs at the Faculty of Medicine to formally lock the thesis title under your name.
+                        Upon receiving TUREC clearance, register the protocol title internationally via the <a class="tut-link" href="https://www.crd.york.ac.uk/prospero/" target="_blank" rel="noopener">PROSPERO database</a> to prevent duplication of effort. Review the <a class="tut-link" href="https://www.crd.york.ac.uk/prospero/#guidancenotes" target="_blank" rel="noopener">PROSPERO registration guidance</a> first. Concurrently, submit the final, signed dossier to the Vice Dean for Postgraduate Affairs at the Faculty of Medicine to formally lock the thesis title under your name.
                     </p>
                 </div>
             </div>
@@ -300,11 +441,11 @@
             <p class="text-lg leading-relaxed mb-8 font-serif text-slate-600">
                 This section transitions from rules to active execution. It provides actionable frameworks for utilizing digital tools, structured data matrices, and advanced biostatistics software to dramatically increase the efficiency and accuracy of your screening and analysis phases.
             </p>
-            
+
             <div class="space-y-10">
                 <div>
                     <h3 class="font-serif text-xl font-bold text-tanta-navy mb-3">1. Boolean Search Strategy Construction</h3>
-                    <p class="text-sm text-slate-700 mb-3">Translate your PICO criteria into robust database queries using proper syntax.</p>
+                    <p class="text-sm text-slate-700 mb-3">Translate your PICO criteria into robust database queries using proper syntax. Use the <a class="tut-link" href="https://www.ncbi.nlm.nih.gov/mesh/" target="_blank" rel="noopener">MeSH Browser</a> to find controlled vocabulary and the <a class="tut-link" href="https://sr-accelerator.com/#/polyglot" target="_blank" rel="noopener">Polyglot Search Translator</a> to convert a PubMed query for Scopus, Embase, etc.</p>
                     <div class="bg-slate-800 p-4 rounded text-xs font-mono text-green-400 overflow-x-auto shadow-inner">
                         <span class="text-slate-400 block mb-2 font-sans tracking-widest uppercase">Example Clinical Query (Orthopedics Trauma)</span>
                         ("Tibia Fractures"[MeSH Terms] OR "Distal Tibia Fracture"[Title/Abstract] OR "Fibula Fracture"[Title/Abstract])<br>
@@ -317,13 +458,13 @@
                     <div class="bg-white border border-slate-200 p-5 rounded shadow-sm">
                         <h3 class="font-serif text-lg font-bold text-tanta-navy mb-2">2. Blinded Screening via Rayyan</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            Abandon Excel for the initial screening phase. Export your bulk search results from PubMed/Cochrane as .RIS files and import them into the Rayyan web platform. It automatically detects duplicates and allows you and your co-reviewer to independently vote "Include" or "Exclude" blindly, satisfying PRISMA blinding requirements instantly.
+                            Abandon Excel for the initial screening phase. Export your bulk search results from PubMed/Cochrane as .RIS files and import them into the <a class="tut-link" href="https://www.rayyan.ai/" target="_blank" rel="noopener">Rayyan</a> web platform. It automatically detects duplicates and allows you and your co-reviewer to independently vote "Include" or "Exclude" blindly, satisfying PRISMA blinding requirements instantly. (<a class="tut-link" href="https://www.covidence.org/" target="_blank" rel="noopener">Covidence</a> is a strong Cochrane-endorsed alternative.)
                         </p>
                     </div>
                     <div class="bg-white border border-slate-200 p-5 rounded shadow-sm">
                         <h3 class="font-serif text-lg font-bold text-tanta-navy mb-2">3. Reference Management</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            Never format citations manually. Utilize software such as Mendeley or EndNote. Install the Microsoft Word plugin, import your final included studies, and select the Vancouver style. The software will auto-generate and update your bibliography dynamically as you write.
+                            Never format citations manually. Utilize software such as <a class="tut-link" href="https://www.mendeley.com/" target="_blank" rel="noopener">Mendeley</a>, <a class="tut-link" href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero</a> (free &amp; open-source), or <a class="tut-link" href="https://endnote.com/" target="_blank" rel="noopener">EndNote</a>. Install the Microsoft Word plugin, import your final included studies, and select the Vancouver style. The software will auto-generate and update your bibliography dynamically as you write.
                         </p>
                     </div>
                 </div>
@@ -339,7 +480,7 @@
                         <span class="bg-slate-100 border border-slate-300 px-3 py-1 rounded">Mean Age / Demographics</span>
                         <span class="bg-slate-100 border border-slate-300 px-3 py-1 rounded">Intervention Specifics</span>
                         <span class="bg-slate-100 border border-slate-300 px-3 py-1 rounded">Control Details</span>
-                        <span class="bg-tanta-blue text-white px-3 py-1 rounded">Primary Outcome Data (Mean ± SD / Events)</span>
+                        <span class="bg-tanta-blue text-white px-3 py-1 rounded">Primary Outcome Data (Mean &plusmn; SD / Events)</span>
                         <span class="bg-slate-100 border border-slate-300 px-3 py-1 rounded">Follow-up Duration</span>
                     </div>
                 </div>
@@ -349,10 +490,11 @@
                         <h3 class="font-serif text-xl font-bold text-tanta-navy mb-3">5. Risk of Bias (RoB) Tool Matching</h3>
                         <p class="text-sm text-slate-700 mb-4">Applying the incorrect quality assessment tool will result in thesis revision. Match the tool to the primary study design:</p>
                         <ul class="space-y-3 text-sm">
-                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">RCTs</span> &#8594; Cochrane RoB 2.0</li>
-                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">Observational</span> &#8594; Newcastle-Ottawa Scale (NOS)</li>
-                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">Non-RCT Trials</span> &#8594; ROBINS-I</li>
+                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">RCTs</span> &#8594; <a class="tut-link ml-1" href="https://www.riskofbias.info/welcome/rob-2-0-tool/current-version-of-rob-2" target="_blank" rel="noopener">Cochrane RoB 2.0</a></li>
+                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">Observational</span> &#8594; <a class="tut-link ml-1" href="https://www.ohri.ca/programs/clinical_epidemiology/oxford.asp" target="_blank" rel="noopener">Newcastle-Ottawa Scale</a></li>
+                            <li class="flex items-center border border-slate-200 p-2 rounded bg-white"><span class="font-bold text-tanta-blue w-28 flex-shrink-0">Non-RCT Trials</span> &#8594; <a class="tut-link ml-1" href="https://www.riskofbias.info/welcome/home/current-version-of-robins-i" target="_blank" rel="noopener">ROBINS-I</a></li>
                         </ul>
+                        <p class="text-xs text-slate-500 mt-3">Tip: visualise your judgements with the free <a class="tut-link" href="https://www.riskofbias.info/welcome/robvis-visualization-tool" target="_blank" rel="noopener">robvis</a> traffic-light plot tool.</p>
                     </div>
                     <div class="bg-slate-50 border border-tanta-gold p-5 rounded">
                         <h3 class="font-serif text-lg font-bold text-tanta-gold mb-2">6. Advanced Biostatistics Setup</h3>
@@ -360,31 +502,314 @@
                             For data synthesis and forest plot generation, transition away from basic tools and utilize the <strong>R programming language</strong>.
                         </p>
                         <p class="text-sm text-slate-700 leading-relaxed">
-                            Installing R Studio and utilizing dedicated statistical packages such as <code class="bg-white px-1 border border-slate-200 rounded text-tanta-navy font-bold">meta</code> and <code class="bg-white px-1 border border-slate-200 rounded text-tanta-navy font-bold">metafor</code> provides superior control over random-effects modeling and generates highly professional, publication-ready data plots.
+                            Installing R Studio and utilizing dedicated statistical packages such as <a class="tut-link" href="https://cran.r-project.org/package=meta" target="_blank" rel="noopener"><code class="bg-white px-1 border border-slate-200 rounded text-tanta-navy font-bold">meta</code></a> and <a class="tut-link" href="https://www.metafor-project.org/" target="_blank" rel="noopener"><code class="bg-white px-1 border border-slate-200 rounded text-tanta-navy font-bold">metafor</code></a> provides superior control over random-effects modeling and generates highly professional, publication-ready data plots. No coding? Try <a class="tut-link" href="https://www.cochrane.org/our-evidence/our-products-and-services/revman" target="_blank" rel="noopener">RevMan</a> or the free Excel-based <a class="tut-link" href="https://www.erim.eur.nl/research-support/meta-essentials/" target="_blank" rel="noopener">Meta-Essentials</a>.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ===================== SECTION VII: RESOURCE LIBRARY ===================== -->
+        <section id="sec-resources" class="hidden">
+            <div class="border-b border-slate-300 pb-4 mb-8">
+                <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section VII</p>
+                <h2 class="font-serif text-3xl font-bold text-tanta-navy">Tutorial &amp; Resource Library</h2>
+            </div>
+            <p class="text-lg leading-relaxed mb-8 font-serif text-slate-600">
+                A curated, single-page directory of the most authoritative, free meta-analysis tutorials and tools &mdash; organised by the exact order you will use them. Every link opens in a new tab.
+            </p>
+
+            <!-- Category: Foundations -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Foundations &amp; Free Courses</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <a href="https://training.cochrane.org/handbook/current" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Cochrane Handbook <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">The definitive, free reference manual for every stage of a systematic review and meta-analysis.</p>
+                </a>
+                <a href="https://training.cochrane.org/interactivelearning" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Cochrane Interactive Learning <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Structured online modules covering the full review process (free intro modules).</p>
+                </a>
+                <a href="https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Doing Meta-Analysis in R <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Harrer et al.&mdash;a free, beginner-to-advanced hands-on book with copy-paste code.</p>
+                </a>
+                <a href="https://www.youtube.com/c/cochranecollaboration" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Cochrane YouTube Channel <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Free video walkthroughs of meta-analysis concepts, forest plots, and heterogeneity.</p>
+                </a>
+            </div>
+
+            <!-- Category: Protocol & Reporting -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Protocol, Registration &amp; Reporting</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <a href="https://www.crd.york.ac.uk/prospero/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">PROSPERO Registration <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Mandatory international prospective registry of your review protocol.</p>
+                </a>
+                <a href="https://www.prisma-statement.org/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">PRISMA 2020 Statement <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Checklists, the flow diagram, and extensions (PRISMA-P, PRISMA-DTA, etc.).</p>
+                </a>
+                <a href="https://www.bmj.com/content/372/bmj.n71" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">PRISMA 2020 Explanation (BMJ) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">The full open-access paper explaining every reporting item with examples.</p>
+                </a>
+                <a href="https://www.equator-network.org/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">EQUATOR Network <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Master library of all reporting guidelines (PRISMA, MOOSE, STROBE, CONSORT&hellip;).</p>
+                </a>
+            </div>
+
+            <!-- Category: Searching, Screening & Extraction -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Searching, Screening &amp; Extraction</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <a href="https://www.ncbi.nlm.nih.gov/mesh/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">PubMed MeSH Browser <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Build precise controlled-vocabulary search terms for your Boolean strategy.</p>
+                </a>
+                <a href="https://sr-accelerator.com/#/polyglot" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Polyglot Search Translator <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Instantly convert one database's syntax to Embase, Scopus, Web of Science, etc.</p>
+                </a>
+                <a href="https://www.rayyan.ai/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Rayyan <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Free blinded dual-reviewer title/abstract screening with auto de-duplication.</p>
+                </a>
+                <a href="https://www.covidence.org/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Covidence <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Cochrane's recommended end-to-end screening &amp; extraction platform.</p>
+                </a>
+            </div>
+
+            <!-- Category: Risk of Bias & Quality -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Risk of Bias &amp; Quality Appraisal</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <a href="https://www.riskofbias.info/welcome/rob-2-0-tool" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Cochrane RoB 2 (RCTs) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Official tool, Excel templates, and guidance for randomized trials.</p>
+                </a>
+                <a href="https://www.riskofbias.info/welcome/home" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">ROBINS-I (Non-randomized) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">For non-randomized studies of interventions.</p>
+                </a>
+                <a href="https://www.ohri.ca/programs/clinical_epidemiology/oxford.asp" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Newcastle-Ottawa Scale <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Standard appraisal tool for cohort and case-control observational studies.</p>
+                </a>
+                <a href="https://amstar.ca/Amstar-2.php" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">AMSTAR 2 <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Appraise the methodological quality of existing systematic reviews.</p>
+                </a>
+                <a href="https://www.riskofbias.info/welcome/robvis-visualization-tool" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">robvis <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Generate publication-ready risk-of-bias traffic-light &amp; summary plots free.</p>
+                </a>
+                <a href="https://www.gradeworkinggroup.org/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">GRADE Working Group <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Rate certainty of evidence; build Summary-of-Findings tables with GRADEpro.</p>
+                </a>
+            </div>
+
+            <!-- Category: Statistical Synthesis -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Statistical Synthesis &amp; Software</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <a href="https://www.metafor-project.org/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">metafor (R) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">The most comprehensive R package for meta-analysis, with extensive worked examples.</p>
+                </a>
+                <a href="https://cran.r-project.org/package=meta" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">meta (R) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Friendly package for forest/funnel plots and standard pooled estimates.</p>
+                </a>
+                <a href="https://www.cochrane.org/our-evidence/our-products-and-services/revman" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">RevMan <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Cochrane's point-and-click software&mdash;no coding required for forest plots.</p>
+                </a>
+                <a href="https://www.erim.eur.nl/research-support/meta-essentials/" target="_blank" rel="noopener" class="resource-card block bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                    <p class="font-serif font-bold text-tanta-navy">Meta-Essentials (Excel) <span class="text-tanta-blue">&#8599;</span></p>
+                    <p class="text-sm text-slate-600 mt-1">Free Excel workbooks for a complete meta-analysis without any new software.</p>
+                </a>
+            </div>
+
+            <div class="mt-8 p-5 bg-amber-50 border border-tanta-gold rounded-lg flex items-start">
+                <span class="text-xl mr-3 leading-none text-tanta-gold">&#9733;</span>
+                <p class="text-sm text-slate-800">
+                    <strong>Suggested learning order:</strong> Cochrane Handbook &rarr; PROSPERO &amp; PRISMA-P (protocol) &rarr; MeSH + Polyglot (search) &rarr; Rayyan (screen) &rarr; RoB 2 / NOS (appraise) &rarr; <em>Doing Meta-Analysis in R</em> + metafor (synthesise) &rarr; PRISMA 2020 + GRADE (report).
+                </p>
+            </div>
+        </section>
+
+        <!-- ===================== SECTION VIII: ABOUT THE AUTHOR / CONTACT ===================== -->
+        <section id="sec-author" class="hidden">
+            <div class="border-b border-slate-300 pb-4 mb-8">
+                <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section VIII</p>
+                <h2 class="font-serif text-3xl font-bold text-tanta-navy">About the Author &amp; Mentoring</h2>
+            </div>
+
+            <!-- Hero -->
+            <div class="bg-tanta-navy text-white rounded-xl p-8 shadow-lg flex flex-col sm:flex-row items-center gap-6 mb-10">
+                <div class="w-28 h-28 rounded-full bg-tanta-gold/15 border-2 border-tanta-gold flex items-center justify-center font-serif font-bold text-tanta-gold text-4xl flex-shrink-0">AG</div>
+                <div class="text-center sm:text-left">
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold">Abdelwahab Ghazy, <span class="text-tanta-gold">MD</span></h3>
+                    <p class="text-blue-200 mt-1 text-sm uppercase tracking-widest">Physician &amp; Evidence-Synthesis Mentor</p>
+                    <p class="text-slate-200 mt-4 leading-relaxed text-sm max-w-xl">
+                        I help postgraduate physicians and researchers turn a clinical question into a published systematic review or meta-analysis &mdash; guiding every step from PICO formulation and PROSPERO registration through statistical synthesis, thesis writing, and journal submission, in full compliance with PRISMA 2020 and Tanta University standards.
+                    </p>
+                    <div class="mt-5 flex flex-wrap gap-3 justify-center sm:justify-start">
+                        <a href="https://wa.me/201030080342?text=Hello%20Dr.%20Abdelwahab%2C%20I%27d%20like%20help%20with%20my%20meta-analysis." target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.974-1.039zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+                            Chat on WhatsApp
+                        </a>
+                        <a href="mailto:dr.abdelwahab.ghazy@gmail.com?subject=Meta-analysis%20mentoring%20enquiry" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Email me
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value props band -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 text-center">
+                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                    <p class="font-serif text-tanta-blue font-bold text-lg">End-to-end</p>
+                    <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">PICO &rarr; Publication</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                    <p class="font-serif text-tanta-blue font-bold text-lg">PRISMA 2020</p>
+                    <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Fully compliant</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                    <p class="font-serif text-tanta-blue font-bold text-lg">R &amp; RevMan</p>
+                    <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Statistical synthesis</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                    <p class="font-serif text-tanta-blue font-bold text-lg">1-on-1</p>
+                    <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Personal mentoring</p>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> How I Can Help</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Topic &amp; PICO Formulation</h4>
+                    <p class="text-sm text-slate-600">Refining a feasible, publishable research question and registering it on PROSPERO.</p>
+                </div>
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Search Strategy Design</h4>
+                    <p class="text-sm text-slate-600">Reproducible Boolean/MeSH strategies across PubMed, Scopus, Embase, and Cochrane.</p>
+                </div>
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Screening &amp; Extraction</h4>
+                    <p class="text-sm text-slate-600">Setting up Rayyan/Covidence for blinded dual-review and structured data extraction.</p>
+                </div>
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Risk of Bias &amp; GRADE</h4>
+                    <p class="text-sm text-slate-600">Correct tool selection (RoB 2, ROBINS-I, NOS) and certainty-of-evidence rating.</p>
+                </div>
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Statistical Synthesis</h4>
+                    <p class="text-sm text-slate-600">Forest/funnel plots, heterogeneity, and meta-regression in R (meta/metafor) or RevMan.</p>
+                </div>
+                <div class="border-t-4 border-tanta-blue bg-white p-5 shadow-sm rounded-b">
+                    <h4 class="font-serif font-bold text-tanta-navy mb-1">Thesis &amp; Manuscript Writing</h4>
+                    <p class="text-sm text-slate-600">Drafting, formatting to Tanta University standards, and preparing for journal submission.</p>
+                </div>
+            </div>
+
+            <!-- Contact + form -->
+            <h3 class="font-serif text-xl font-bold text-tanta-navy mb-4 flex items-center"><span class="mr-3 text-tanta-gold">&#9632;</span> Get in Touch</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Direct contact cards -->
+                <div class="space-y-3">
+                    <a href="https://wa.me/201030080342?text=Hello%20Dr.%20Abdelwahab%2C%20I%27d%20like%20help%20with%20my%20meta-analysis." target="_blank" rel="noopener" class="resource-card flex items-center gap-4 bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                        <span class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.974-1.039z"/></svg>
+                        </span>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase tracking-wide">WhatsApp</p>
+                            <p class="font-semibold text-tanta-navy">+20 103 008 0342</p>
+                        </div>
+                    </a>
+                    <a href="mailto:dr.abdelwahab.ghazy@gmail.com?subject=Meta-analysis%20mentoring%20enquiry" class="resource-card flex items-center gap-4 bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                        <span class="w-10 h-10 rounded-full bg-blue-100 text-tanta-blue flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </span>
+                        <div class="min-w-0">
+                            <p class="text-xs text-slate-500 uppercase tracking-wide">Email (primary)</p>
+                            <p class="font-semibold text-tanta-navy break-all">dr.abdelwahab.ghazy@gmail.com</p>
+                        </div>
+                    </a>
+                    <a href="mailto:dr.abdelwahab.ghazy@outlook.com?subject=Meta-analysis%20mentoring%20enquiry" class="resource-card flex items-center gap-4 bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
+                        <span class="w-10 h-10 rounded-full bg-blue-100 text-tanta-blue flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </span>
+                        <div class="min-w-0">
+                            <p class="text-xs text-slate-500 uppercase tracking-wide">Email (alternate)</p>
+                            <p class="font-semibold text-tanta-navy break-all">dr.abdelwahab.ghazy@outlook.com</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Quick message form (opens the user's email client pre-filled) -->
+                <form onsubmit="return sendAuthorEmail(event)" class="bg-slate-50 border border-slate-200 rounded-lg p-5 shadow-sm space-y-3">
+                    <p class="text-sm font-semibold text-tanta-navy">Send a quick message</p>
+                    <input id="cf-name" type="text" required placeholder="Your name" class="w-full text-sm border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-tanta-blue focus:ring-1 focus:ring-tanta-blue">
+                    <input id="cf-email" type="email" required placeholder="Your email" class="w-full text-sm border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-tanta-blue focus:ring-1 focus:ring-tanta-blue">
+                    <textarea id="cf-msg" rows="4" required placeholder="Tell me about your research / thesis…" class="w-full text-sm border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-tanta-blue focus:ring-1 focus:ring-tanta-blue"></textarea>
+                    <button type="submit" class="w-full bg-tanta-blue hover:bg-tanta-navy text-white text-sm font-semibold py-2.5 rounded transition-colors">Open in my email app</button>
+                    <p class="text-[11px] text-slate-400 leading-snug">This opens your own email application with the message pre-filled &mdash; nothing is sent automatically.</p>
+                </form>
+            </div>
+        </section>
+
     </main>
 </div>
 
-<footer class="bg-slate-100 border-t border-slate-200 mt-auto no-print">
-    <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-        <p>&copy; 2026 Tanta University Faculty of Medicine. All rights reserved.</p>
-        <p class="mt-2 md:mt-0 font-mono">Document Ref: TU-MED-PGR-META-02 | Workflow Integrated</p>
+<footer class="bg-tanta-navy text-slate-300 mt-auto no-print">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+        <div class="flex flex-col md:flex-row justify-between gap-6 border-b border-white/10 pb-6">
+            <div class="max-w-sm">
+                <p class="font-serif text-white font-bold text-lg">Abdelwahab Ghazy, <span class="text-tanta-gold">MD</span></p>
+                <p class="text-sm text-slate-400 mt-1">Meta-analysis &amp; systematic-review mentoring &mdash; from PICO to publication.</p>
+            </div>
+            <div class="flex flex-col gap-2 text-sm">
+                <p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Contact</p>
+                <a href="https://wa.me/201030080342?text=Hello%20Dr.%20Abdelwahab%2C%20I%27d%20like%20help%20with%20my%20meta-analysis." target="_blank" rel="noopener" class="hover:text-tanta-gold transition-colors">WhatsApp: +20 103 008 0342</a>
+                <a href="mailto:dr.abdelwahab.ghazy@gmail.com" class="hover:text-tanta-gold transition-colors break-all">dr.abdelwahab.ghazy@gmail.com</a>
+                <a href="mailto:dr.abdelwahab.ghazy@outlook.com" class="hover:text-tanta-gold transition-colors break-all">dr.abdelwahab.ghazy@outlook.com</a>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 pt-6 gap-2">
+            <p>&copy; 2026 &middot; Educational resource for Tanta University Faculty of Medicine postgraduates.</p>
+            <p class="font-mono">Document Ref: TU-MED-PGR-META-02 | Workflow Integrated</p>
+        </div>
     </div>
 </footer>
 
 <script>
-    const sections = ['overview', 'structure', 'methodology', 'formatting', 'admin', 'workflow'];
-    
+    const sections = ['overview', 'structure', 'methodology', 'formatting', 'admin', 'workflow', 'resources', 'author'];
+    const TAB_KEY = 'tu-meta-active-tab';
+    const CHECK_KEY = 'tu-prisma-checklist';
+
+    // Contact form -> opens the visitor's own email client with a pre-filled message.
+    function sendAuthorEmail(event) {
+        event.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const msg = document.getElementById('cf-msg').value.trim();
+        const subject = encodeURIComponent(`Meta-analysis enquiry from ${name}`);
+        const body = encodeURIComponent(`${msg}\n\n— ${name}\nReply to: ${email}`);
+        window.location.href = `mailto:dr.abdelwahab.ghazy@gmail.com?subject=${subject}&body=${body}`;
+        return false;
+    }
+
     function switchTab(tabId) {
         sections.forEach(sec => {
             document.getElementById(`sec-${sec}`).classList.add('hidden');
             document.getElementById(`sec-${sec}`).classList.remove('block');
-            
+
             const btn = document.getElementById(`btn-${sec}`);
             btn.classList.remove('tab-active');
             btn.classList.add('tab-inactive');
@@ -392,10 +817,12 @@
 
         document.getElementById(`sec-${tabId}`).classList.remove('hidden');
         document.getElementById(`sec-${tabId}`).classList.add('block');
-        
+
         const activeBtn = document.getElementById(`btn-${tabId}`);
         activeBtn.classList.remove('tab-inactive');
         activeBtn.classList.add('tab-active');
+
+        try { localStorage.setItem(TAB_KEY, tabId); } catch (e) {}
 
         if (tabId === 'structure' && !window.chartInitialized) {
             initChart();
@@ -403,39 +830,42 @@
         }
 
         const sidebar = document.getElementById('sidebar');
-        if(window.innerWidth < 768) {
+        if (window.innerWidth < 768) {
             sidebar.classList.add('hidden');
         }
-        
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('hidden');
-    });
+    // Mobile hamburger — element now exists in the header, so this no longer crashes the script.
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('hidden');
+        });
+    }
 
     function initChart() {
         const ctx = document.getElementById('structureChart').getContext('2d');
-        
+
         new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: [
-                    'Introduction & Lit Review', 
-                    'Methodology', 
-                    'Results Synthesis', 
-                    'Discussion', 
+                    'Introduction & Lit Review',
+                    'Methodology',
+                    'Results Synthesis',
+                    'Discussion',
                     'Conclusions & Refs'
                 ],
                 datasets: [{
                     data: [15, 30, 30, 15, 10],
                     backgroundColor: [
-                        '#cbd5e1',
+                        '#93c5fd',
+                        '#1e40af',
                         '#0f172a',
-                        '#1e3a8a',
-                        '#94a3b8',
-                        '#f8fafc' 
+                        '#64748b',
+                        '#cbd5e1'
                     ],
                     borderWidth: 1,
                     borderColor: '#e2e8f0',
@@ -448,10 +878,7 @@
                     legend: {
                         position: 'bottom',
                         labels: {
-                            font: {
-                                family: "'Open Sans', sans-serif",
-                                size: 11
-                            },
+                            font: { family: "'Open Sans', sans-serif", size: 11 },
                             boxWidth: 12,
                             padding: 15
                         }
@@ -485,9 +912,27 @@
         "Completion of the PRISMA Flow Diagram"
     ];
 
+    function loadCheckState() {
+        try {
+            const raw = localStorage.getItem(CHECK_KEY);
+            if (!raw) return [];
+            const arr = JSON.parse(raw);
+            return Array.isArray(arr) ? arr : [];
+        } catch (e) { return []; }
+    }
+
+    function saveCheckState() {
+        const states = checklistItems.map((_, i) => {
+            const cb = document.getElementById(`check-${i}`);
+            return cb ? cb.checked : false;
+        });
+        try { localStorage.setItem(CHECK_KEY, JSON.stringify(states)); } catch (e) {}
+    }
+
     function renderChecklist() {
         const container = document.getElementById('checklist-container');
-        
+        const saved = loadCheckState();
+
         checklistItems.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'flex items-start p-4 hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-100 last:border-0';
@@ -501,19 +946,22 @@
                 <label class="text-sm text-slate-700 cursor-pointer select-none leading-snug w-full" id="label-${index}">${item}</label>
             `;
             container.appendChild(div);
+
+            // Restore saved state
+            if (saved[index]) {
+                const cb = div.querySelector('input');
+                cb.checked = true;
+                applyCheckStyles(index, true);
+            }
         });
+
+        updateProgress();
     }
 
-    function toggleCheckbox(index, event) {
-        const checkbox = document.getElementById(`check-${index}`);
+    function applyCheckStyles(index, checked) {
         const mark = document.getElementById(`mark-${index}`);
         const label = document.getElementById(`label-${index}`);
-        
-        if(event && event.target.tagName !== 'INPUT') {
-            checkbox.checked = !checkbox.checked;
-        }
-
-        if (checkbox.checked) {
+        if (checked) {
             mark.classList.remove('hidden');
             label.classList.add('text-slate-400', 'line-through');
             label.classList.remove('text-slate-700');
@@ -522,23 +970,41 @@
             label.classList.remove('text-slate-400', 'line-through');
             label.classList.add('text-slate-700');
         }
+    }
 
+    function toggleCheckbox(index, event) {
+        const checkbox = document.getElementById(`check-${index}`);
+
+        if (event && event.target.tagName !== 'INPUT') {
+            checkbox.checked = !checkbox.checked;
+        }
+
+        applyCheckStyles(index, checkbox.checked);
+        saveCheckState();
+        updateProgress();
+    }
+
+    function resetChecklist() {
+        checklistItems.forEach((_, i) => {
+            const cb = document.getElementById(`check-${i}`);
+            if (cb) cb.checked = false;
+            applyCheckStyles(i, false);
+        });
+        saveCheckState();
         updateProgress();
     }
 
     function updateProgress() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#checklist-container input[type="checkbox"]');
         let checkedCount = 0;
-        checkboxes.forEach(cb => {
-            if(cb.checked) checkedCount++;
-        });
+        checkboxes.forEach(cb => { if (cb.checked) checkedCount++; });
 
         const percentage = Math.round((checkedCount / checklistItems.length) * 100);
-        
+
         document.getElementById('progress-bar').style.width = `${percentage}%`;
         document.getElementById('progress-text').innerText = `${percentage}%`;
 
-        if(percentage === 100) {
+        if (percentage === 100) {
             document.getElementById('progress-text').classList.add('text-tanta-gold');
             document.getElementById('progress-text').classList.remove('text-tanta-blue');
             document.getElementById('progress-bar').classList.add('bg-tanta-gold');
@@ -553,7 +1019,16 @@
 
     window.onload = () => {
         renderChecklist();
+
+        // Restore last viewed tab (defaults to overview)
+        let startTab = 'overview';
+        try {
+            const saved = localStorage.getItem(TAB_KEY);
+            if (saved && sections.includes(saved)) startTab = saved;
+        } catch (e) {}
+        switchTab(startTab);
     };
 </script>
 
-```
+</body>
+</html>
