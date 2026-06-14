@@ -33,7 +33,7 @@
         emailPrimary: "dr.abdelwahab.ghazy@gmail.com",
         emailAlt:     "dr.abdelwahab.ghazy@outlook.com",
         calendly:     "",                       // e.g. "https://calendly.com/your-name/intro-call"  (blank = button hidden)
-        web3formsKey: "3150b748-66f6-4144-839c-ca25e9ae4e93",                       // free key from https://web3forms.com  (blank = form falls back to opening email app)
+        web3formsKey: "3150b748-66f6-4144-839c-ca25e9ae4e93",   // free key from https://web3forms.com  (blank = form falls back to opening email app)
         social: {                               // paste full profile URLs; blank ones are hidden automatically
           linkedin:     "https://www.linkedin.com/in/abdelwahabghazymd/",
           researchgate: "",
@@ -51,7 +51,7 @@
       "@type": "Person",
       "name": "Abdelwahab Ghazy",
       "honorificSuffix": "MD",
-      "jobTitle": "Researcher & Biostatistician & Evidence-Synthesis Mentor",
+      "jobTitle": "Clinical Researcher, Biostatistician & Evidence-Synthesis Mentor",
       "email": "mailto:dr.abdelwahab.ghazy@gmail.com",
       "telephone": "+201030080342",
       "knowsAbout": ["Meta-analysis", "Systematic review", "PRISMA 2020", "Evidence synthesis", "Medical statistics"],
@@ -93,7 +93,7 @@
         body { font-family: 'Open Sans', system-ui, sans-serif; }
 
         /* Sidebar tab states (were referenced but never defined) */
-        .tab-active   { background:#ffffff; border-left:4px solid #1e40af; color:#0f172a; font-weight:700; }
+        .tab-active   { background:#ffffff; border-left:4px solid #9a7113; color:#0f172a; font-weight:700; }
         .tab-inactive { color:#475569; border-left:4px solid transparent; }
 
         /* Chart wrapper (was referenced but never defined) */
@@ -135,6 +135,14 @@
         /* hidden-until-configured helper */
         .cfg-hidden { display:none !important; }
 
+        /* ===== Visual polish ===== */
+        .site-header { background:linear-gradient(100deg,#0b1020 0%,#16285a 55%,#0b1020 100%); border-bottom:3px solid #9a7113; }
+        .hero-grad   { background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%); }
+        .nav-ico     { width:1.15rem; height:1.15rem; flex-shrink:0; opacity:.75; transition:opacity .15s, color .15s; }
+        .tab-active .nav-ico { opacity:1; color:#9a7113; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+        .tab-anim { animation:fadeUp .35s ease both; }
+
         @media print {
             .fab, #back-to-top { display:none !important; }
             .no-print { display:none !important; }
@@ -146,7 +154,7 @@
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
 <!-- ===================== HEADER (mobile menu lives here) ===================== -->
-<header class="bg-tanta-navy text-white no-print sticky top-0 z-30 shadow-lg">
+<header class="site-header text-white no-print sticky top-0 z-30 shadow-lg">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-full bg-tanta-gold/15 border border-tanta-gold flex items-center justify-center font-serif font-bold text-tanta-gold text-lg flex-shrink-0">TU</div>
@@ -179,42 +187,50 @@
             </div>
             <ul class="flex flex-col">
                 <li>
-                    <button onclick="switchTab('overview')" id="btn-overview" class="w-full text-left px-6 py-4 transition-colors tab-active hover:bg-white text-sm">
+                    <button onclick="switchTab('overview')" id="btn-overview" class="w-full text-left px-5 py-4 transition-colors tab-active hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         I. Scope &amp; Word Limits
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('structure')" id="btn-structure" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('structure')" id="btn-structure" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4v16M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>
                         II. Thesis Architecture
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('methodology')" id="btn-methodology" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('methodology')" id="btn-methodology" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                         III. PRISMA Compliance
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('formatting')" id="btn-formatting" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('formatting')" id="btn-formatting" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h10M4 18h7"/></svg>
                         IV. Formatting Regulations
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('admin')" id="btn-admin" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('admin')" id="btn-admin" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                         V. TUREC &amp; Admin Roadmap
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('workflow')" id="btn-workflow" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('workflow')" id="btn-workflow" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         VI. Digital Workflow Toolkit
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('resources')" id="btn-resources" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('resources')" id="btn-resources" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         VII. Tutorial &amp; Resource Library
                     </button>
                 </li>
                 <li class="border-t border-slate-100">
-                    <button onclick="switchTab('author')" id="btn-author" class="w-full text-left px-6 py-4 transition-colors tab-inactive hover:bg-white text-sm">
+                    <button onclick="switchTab('author')" id="btn-author" class="w-full text-left px-5 py-4 transition-colors tab-inactive hover:bg-white text-sm flex items-center gap-3">
+                        <svg class="nav-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         VIII. About the Author
                     </button>
                 </li>
@@ -223,7 +239,7 @@
                 <p class="text-xs text-tanta-gold font-bold uppercase tracking-wide mb-1">Critical Notice</p>
                 <p class="text-xs text-slate-800 font-serif leading-relaxed">Ensure your protocol is registered with the institutional ethical committee before initiating data extraction.</p>
             </div>
-            <button onclick="switchTab('author')" class="m-6 mt-0 w-[calc(100%-3rem)] text-left p-4 border border-tanta-blue bg-tanta-navy hover:bg-tanta-blue transition-colors rounded hidden md:block group">
+            <button onclick="switchTab('author')" class="m-6 mt-0 w-[calc(100%-3rem)] text-left p-4 border border-tanta-blue hero-grad hover:opacity-95 transition-opacity rounded hidden md:block group">
                 <p class="text-xs text-tanta-gold font-bold uppercase tracking-wide mb-1">Need 1-on-1 help?</p>
                 <p class="text-sm text-white font-serif leading-relaxed">Get personal mentoring on your meta-analysis &mdash; from PICO to publication.</p>
                 <span class="text-xs text-blue-200 font-semibold mt-2 inline-block group-hover:translate-x-1 transition-transform">Contact Dr. Ghazy &rarr;</span>
@@ -233,6 +249,19 @@
 
     <main class="flex-grow p-6 md:p-10 w-full max-w-4xl overflow-hidden">
         <section id="sec-overview" class="block">
+            <!-- Welcome banner -->
+            <div class="hero-grad text-white rounded-xl p-6 md:p-8 mb-10 shadow-lg">
+                <p class="text-xs text-tanta-gold font-bold uppercase tracking-widest mb-2">Tanta University &middot; Faculty of Medicine</p>
+                <h2 class="font-serif text-2xl md:text-3xl font-bold leading-tight mb-3">Your complete guide to a meta-analysis thesis</h2>
+                <p class="text-slate-200 text-sm md:text-base max-w-2xl leading-relaxed">
+                    From your first research question to a bound thesis and a published paper &mdash; an interactive, PRISMA&nbsp;2020-compliant roadmap built for postgraduate physicians, with optional 1-on-1 mentoring from Dr. Abdelwahab Ghazy.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-3">
+                    <button onclick="switchTab('resources')" class="bg-white/10 hover:bg-white/20 border border-white/25 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">Browse the resource library</button>
+                    <button onclick="switchTab('author')" class="bg-tanta-gold hover:bg-tanta-gold/80 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">Work with me &rarr;</button>
+                </div>
+            </div>
+
             <div class="border-b border-slate-300 pb-4 mb-8">
                 <p class="text-sm text-tanta-blue font-bold tracking-widest uppercase mb-1">Section I</p>
                 <h2 class="font-serif text-3xl font-bold text-tanta-navy">Scope &amp; Length Expectations</h2>
@@ -717,11 +746,11 @@
             </div>
 
             <!-- Hero -->
-            <div class="bg-tanta-navy text-white rounded-xl p-8 shadow-lg flex flex-col sm:flex-row items-center gap-6 mb-10">
+            <div class="hero-grad text-white rounded-xl p-8 shadow-lg flex flex-col sm:flex-row items-center gap-6 mb-10">
                 <div class="w-28 h-28 rounded-full bg-tanta-gold/15 border-2 border-tanta-gold flex items-center justify-center font-serif font-bold text-tanta-gold text-4xl flex-shrink-0">AG</div>
                 <div class="text-center sm:text-left">
                     <h3 class="font-serif text-2xl md:text-3xl font-bold">Abdelwahab Ghazy, <span class="text-tanta-gold">MD</span></h3>
-                    <p class="text-blue-200 mt-1 text-sm uppercase tracking-widest">Physician &amp; Evidence-Synthesis Mentor</p>
+                    <p class="text-blue-200 mt-1 text-sm uppercase tracking-widest">Clinical Researcher &middot; Biostatistician &middot; Evidence-Synthesis Mentor</p>
                     <p class="text-slate-200 mt-4 leading-relaxed text-sm max-w-xl">
                         I help postgraduate physicians and researchers turn a clinical question into a published systematic review or meta-analysis &mdash; guiding every step from PICO formulation and PROSPERO registration through statistical synthesis, thesis writing, and journal submission, in full compliance with PRISMA 2020 and Tanta University standards.
                     </p>
@@ -853,7 +882,7 @@
                         <span class="font-semibold text-tanta-navy text-sm pr-4">How long does a meta-analysis usually take?</span>
                         <svg class="faq-chev w-5 h-5 text-tanta-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </div>
-                    <div class="faq-a"><p class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">Typically 1&ndash;3months depending on the number of studies, your availability, and whether the data needs extensive extraction. I give you a realistic timeline up front.</p></div>
+                    <div class="faq-a"><p class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">Typically 1&ndash;3 months depending on the number of studies, your availability, and whether the data needs extensive extraction. I give you a realistic timeline up front.</p></div>
                 </div>
                 <div class="faq-item bg-white border border-slate-200 rounded-lg overflow-hidden">
                     <div class="faq-q flex items-center justify-between p-4">
@@ -962,7 +991,7 @@
 </button>
 
 <!-- Mobile sticky action bar (phones only) -->
-<div class="md:hidden fixed bottom-0 inset-x-0 z-40 no-print flex shadow-[0_-4px_20px_-6px_rgba(0,0,0,.35)]">
+<div class="md:hidden fixed bottom-0 inset-x-0 z-40 no-print flex rounded-t-2xl overflow-hidden shadow-[0_-4px_20px_-6px_rgba(0,0,0,.35)]">
     <a data-wa class="flex-1 flex items-center justify-center gap-2 bg-green-500 active:bg-green-600 text-white font-semibold py-3.5 text-sm">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.515 5.26l-.999 3.648 3.974-1.039z"/></svg>
         WhatsApp
@@ -1101,8 +1130,10 @@
             btn.classList.add('tab-inactive');
         });
 
-        document.getElementById(`sec-${tabId}`).classList.remove('hidden');
-        document.getElementById(`sec-${tabId}`).classList.add('block');
+        const shownSec = document.getElementById(`sec-${tabId}`);
+        shownSec.classList.remove('hidden');
+        shownSec.classList.add('block');
+        shownSec.classList.remove('tab-anim'); void shownSec.offsetWidth; shownSec.classList.add('tab-anim');
 
         const activeBtn = document.getElementById(`btn-${tabId}`);
         activeBtn.classList.remove('tab-inactive');
