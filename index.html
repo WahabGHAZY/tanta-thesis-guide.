@@ -390,7 +390,7 @@
                 <h2 class="font-serif text-3xl font-bold text-tanta-navy">PRISMA Compliance Audit</h2>
             </div>
             <p class="text-lg leading-relaxed mb-6 font-serif text-slate-600">
-                This section provides an interactive tracking tool for the PRISMA statement protocol. By interacting with this checklist, you can systematically audit your methodology chapter to ensure it meets international reporting standards required by the university review boards.
+                This is the complete PRISMA 2020 reporting checklist, all 27 items, rewritten in plain language. Tick each item as your manuscript covers it. Reaching 100% means your report addresses every element that international journals and the university review board expect.
             </p>
 
             <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-5">
@@ -404,7 +404,7 @@
 
             <div class="bg-white border border-slate-300 shadow-sm rounded-lg overflow-hidden">
                 <div class="bg-slate-100 p-6 border-b border-slate-300 flex justify-between items-center">
-                    <h3 class="font-serif font-bold text-tanta-navy text-xl">Official Audit Tracker</h3>
+                    <h3 class="font-serif font-bold text-tanta-navy text-xl">PRISMA 2020 Reporting Checklist</h3>
                     <div class="text-right">
                         <span class="text-xs uppercase tracking-widest text-slate-500 block mb-1">Completion Status</span>
                         <span id="progress-text" class="text-3xl font-bold text-tanta-blue font-serif">0%</span>
@@ -422,7 +422,7 @@
             <p class="text-xs text-slate-400 mt-2">Your progress is saved automatically in this browser.</p>
             <div class="mt-6 p-4 bg-blue-50 border border-blue-200 text-sm text-blue-900 flex items-start">
                 <span class="text-xl mr-3 leading-none">&#8505;</span>
-                <p>The complete, fully populated PRISMA 2020 checklist document must be physically attached as an appendix to the final bound thesis submission.</p>
+                <p>Each item maps to an official PRISMA 2020 item number. Download the full <a class="tut-link" href="https://www.prisma-statement.org/" target="_blank" rel="noopener">expanded checklist</a> for the detailed sub-items, and attach the completed checklist as an appendix to your bound thesis.</p>
             </div>
         </section>
 
@@ -1005,7 +1005,7 @@
 <script>
     const sections = ['overview', 'structure', 'methodology', 'formatting', 'admin', 'workflow', 'resources', 'author'];
     const TAB_KEY = 'tu-meta-active-tab';
-    const CHECK_KEY = 'tu-prisma-checklist';
+    const CHECK_KEY = 'tu-prisma-checklist-v2';
 
     const CFG = window.SITE_CONFIG || {};
     const waText = encodeURIComponent("Hello Dr. Abdelwahab, I'd like help with my meta-analysis.");
@@ -1218,18 +1218,49 @@
         });
     }
 
-    const checklistItems = [
-        "Formulation of a definitive PICO research question",
-        "Prospective registration of protocol (PROSPERO)",
-        "Documentation of exhaustive search strategies across multiple databases",
-        "Independent dual-reviewer screening process (Title/Abstract & Full Text)",
-        "Standardized data extraction protocols",
-        "Formal Risk of Bias (RoB) Assessment implementation",
-        "Execution of quantitative synthesis (Meta-Analysis models)",
-        "Statistical evaluation of study heterogeneity (I² statistic)",
-        "Assessment of publication bias (e.g., Funnel plots, Egger's test)",
-        "Completion of the PRISMA Flow Diagram"
+    // Full PRISMA 2020 checklist (all 27 items) grouped by section, in plain language.
+    const checklistGroups = [
+        { title: "Title & Abstract", items: [
+            "Title clearly states it is a systematic review (Item 1)",
+            "Structured abstract: background, methods, results, conclusions (Item 2)"
+        ]},
+        { title: "Introduction", items: [
+            "Rationale — why the review is needed and the gap it fills (Item 3)",
+            "Objectives — a clear question, ideally in PICO format (Item 4)"
+        ]},
+        { title: "Methods", items: [
+            "Eligibility criteria — which studies were included and excluded (Item 5)",
+            "Information sources — every database/source searched, with dates (Item 6)",
+            "Full search strategy — the complete search string for at least one database (Item 7)",
+            "Selection process — reviewers, independent screening, conflict resolution (Item 8)",
+            "Data collection process — how data were extracted and by how many reviewers (Item 9)",
+            "Data items — the outcomes and all other variables collected (Item 10)",
+            "Risk-of-bias assessment — tool used, e.g. RoB 2 / ROBINS-I / NOS (Item 11)",
+            "Effect measures — e.g. risk ratio, odds ratio, mean difference (Item 12)",
+            "Synthesis methods — grouping, pooling, model, and heterogeneity (I²) (Item 13)",
+            "Reporting-bias assessment — e.g. funnel plot, Egger's test (Item 14)",
+            "Certainty assessment — confidence in the evidence, e.g. GRADE (Item 15)"
+        ]},
+        { title: "Results", items: [
+            "Study selection — PRISMA flow diagram + excluded near-misses with reasons (Item 16)",
+            "Study characteristics — a table describing each included study (Item 17)",
+            "Risk of bias in studies — the risk-of-bias result for each study (Item 18)",
+            "Results of individual studies — each study's data and effect estimate (Item 19)",
+            "Results of syntheses — pooled results / forest plots, heterogeneity, subgroups (Item 20)",
+            "Reporting biases — results of the publication-bias assessment (Item 21)",
+            "Certainty of evidence — GRADE rating for each main outcome (Item 22)"
+        ]},
+        { title: "Discussion", items: [
+            "Discussion — interpretation, limitations (evidence & methods), and implications (Item 23)"
+        ]},
+        { title: "Other information", items: [
+            "Registration & protocol — PROSPERO ID, protocol location, any amendments (Item 24)",
+            "Support — funding sources and the funder's role (Item 25)",
+            "Competing interests — declare any conflicts of interest (Item 26)",
+            "Availability of data, code & materials (Item 27)"
+        ]}
     ];
+    const checklistItems = checklistGroups.flatMap(g => g.items);
 
     function loadCheckState() {
         try {
@@ -1251,27 +1282,36 @@
     function renderChecklist() {
         const container = document.getElementById('checklist-container');
         const saved = loadCheckState();
+        let index = 0;
 
-        checklistItems.forEach((item, index) => {
-            const div = document.createElement('div');
-            div.className = 'flex items-start p-4 hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-100 last:border-0';
-            div.onclick = (e) => toggleCheckbox(index, e);
+        checklistGroups.forEach(group => {
+            const header = document.createElement('div');
+            header.className = 'px-4 pt-5 pb-2 text-xs font-bold uppercase tracking-widest text-tanta-blue';
+            header.textContent = group.title;
+            container.appendChild(header);
 
-            div.innerHTML = `
-                <div class="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-4 border border-slate-400 bg-white flex-shrink-0 rounded-sm">
-                    <input type="checkbox" id="check-${index}" class="opacity-0 absolute w-full h-full cursor-pointer">
-                    <span id="mark-${index}" class="hidden text-tanta-blue font-bold text-sm leading-none">&#10004;</span>
-                </div>
-                <label class="text-sm text-slate-700 cursor-pointer select-none leading-snug w-full" id="label-${index}">${item}</label>
-            `;
-            container.appendChild(div);
+            group.items.forEach(item => {
+                const i = index;
+                const div = document.createElement('div');
+                div.className = 'flex items-start p-4 hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-100';
+                div.onclick = (e) => toggleCheckbox(i, e);
 
-            // Restore saved state
-            if (saved[index]) {
-                const cb = div.querySelector('input');
-                cb.checked = true;
-                applyCheckStyles(index, true);
-            }
+                div.innerHTML = `
+                    <div class="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-4 border border-slate-400 bg-white flex-shrink-0 rounded-sm">
+                        <input type="checkbox" id="check-${i}" class="opacity-0 absolute w-full h-full cursor-pointer">
+                        <span id="mark-${i}" class="hidden text-tanta-blue font-bold text-sm leading-none">&#10004;</span>
+                    </div>
+                    <label class="text-sm text-slate-700 cursor-pointer select-none leading-snug w-full" id="label-${i}">${item}</label>
+                `;
+                container.appendChild(div);
+
+                // Restore saved state
+                if (saved[i]) {
+                    div.querySelector('input').checked = true;
+                    applyCheckStyles(i, true);
+                }
+                index++;
+            });
         });
 
         updateProgress();
